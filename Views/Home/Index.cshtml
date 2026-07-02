@@ -1,8 +1,102 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model GradTrack.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "GradTrack";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="mb-4">
+
+    <h1 class="display-5 fw-bold">
+        Welcome to GradTrack
+    </h1>
+
+    <p class="lead text-muted">
+        Track internships, graduate programmes and bursary applications in one place.
+    </p>
+
 </div>
+
+<hr />
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Total Opportunities</h5>
+                <h2>@Model.TotalOpportunities</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Applied</h5>
+                <h2>@Model.AppliedCount</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Interviews</h5>
+                <h2>@Model.InterviewCount</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Offers</h5>
+                <h2>@Model.OfferCount</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br />
+
+<h3>Upcoming Deadlines</h3>
+
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>Opportunity</th>
+            <th>Deadline</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model.UpcomingDeadlines)
+        {
+            <tr>
+                <td>@item.CompanyName</td>
+                <td>@item.OpportunityName</td>
+                <td>@item.Deadline.ToShortDateString()</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<p>
+    <a asp-controller="Opportunities"
+       asp-action="Index"
+       class="btn btn-primary">
+        View All Opportunities
+    </a>
+
+    <a asp-controller="Opportunities"
+       asp-action="Create"
+       class="btn btn-success">
+        Add Opportunity
+    </a>
+</p>

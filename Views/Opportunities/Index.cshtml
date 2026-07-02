@@ -6,6 +6,55 @@
 
 <h1>Index</h1>
 
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="row">
+        <input type="text"
+               name="searchString"
+               class="form-control"
+               placeholder="Search company or opportunity..."
+               value="@ViewData["CurrentFilter"]" />
+        </div>
+
+    <div class="col-md-3">
+        <select name="statusFilter" class="form-select">
+            <option value="">All Statuses</option>
+
+            <option value="Applied"
+                    selected="@(ViewData["CurrentStatus"]?.ToString() == "Applied")">
+                Applied
+            </option>
+
+            <option value="Interview"
+                    selected="@(ViewData["CurrentStatus"]?.ToString() == "Interview")">
+                Interview
+            </option>
+
+            <option value="Offer"
+                    selected="@(ViewData["CurrentStatus"]?.ToString() == "Offer")">
+                Offer
+            </option>
+
+            <option value="Rejected"
+                    selected="@(ViewData["CurrentStatus"]?.ToString() == "Rejected")">
+                Rejected
+            </option>
+
+        </select>
+    </div>
+
+        <div class="col-md-2">
+            <input type="submit"
+                   value="Search"
+                   class="btn btn-primary" />
+        </div>
+
+        <div class="col-md-2">
+            <a asp-action="Index" class="btn btn-secondary">
+                Clear
+            </a>
+        </div>
+</form>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -49,7 +98,26 @@
                 @Html.DisplayFor(model => item.Deadline)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Status)
+                    @if (item.Status == "Applied")
+                    {
+                        <span class="badge bg-primary">Applied</span>
+                    }
+                    else if (item.Status == "Interview")
+                    {
+                        <span class="badge bg-warning text-dark">Interview</span>
+                    }
+                    else if (item.Status == "Offer")
+                    {
+                        <span class="badge bg-success">Offer</span>
+                    }
+                    else if (item.Status == "Rejected")
+                    {
+                        <span class="badge bg-danger">Rejected</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">@item.Status</span>
+                    }
             </td>
             <td>
                 @Html.DisplayFor(model => item.Notes)

@@ -14,9 +14,27 @@ public class OpportunitiesController : Controller
     }
 
     // GET: OPPORTUNITYS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index(string searchString, string statusFilter)
     {
-        return View(await _context.Opportunities.ToListAsync());
+        var opportunities = from o in _context.Opportunities
+                            select o;
+
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            opportunities = opportunities.Where(o =>
+                o.CompanyName.Contains(searchString) ||
+                o.OpportunityName.Contains(searchString));
+        }
+
+        if (!string.IsNullOrEmpty(statusFilter))
+        {
+            opportunities = opportunities.Where(o => o.Status == statusFilter);
+        }
+
+        ViewData["CurrentFilter"] = searchString;
+        ViewData["CurrentStatus"] = statusFilter;
+
+        return View(await opportunities.ToListAsync());
     }
 
     // GET: OPPORTUNITYS/Details/5
