@@ -79,13 +79,76 @@
             <tr>
                 <td>@item.CompanyName</td>
                 <td>@item.OpportunityName</td>
-                <td>@item.Deadline.ToShortDateString()</td>
+                <td>
+
+                    @{
+                        var daysLeft = (item.Deadline - DateTime.Today).Days;
+                    }
+
+                    @if (daysLeft <= 7)
+                    {
+                        <span class="badge bg-warning text-dark">
+                            @item.Deadline.ToShortDateString()
+                        </span>
+
+                        <small class="text-muted">
+                            (@daysLeft day@(daysLeft == 1 ? "" : "s") left)
+                        </small>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">
+                            @item.Deadline.ToShortDateString()
+                        </span>
+
+                        <small class="text-muted">
+                            (@daysLeft days left)
+                        </small>
+                    }
+
+                </td>
             </tr>
         }
 
     </tbody>
 
 </table>
+
+<h3 class="mt-5">Overdue Opportunities</h3>
+
+@if (Model.OverdueOpportunities.Any())
+{
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Opportunity</th>
+                <th>Deadline</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model.OverdueOpportunities)
+            {
+                <tr class="table-danger">
+                    <td>@item.CompanyName</td>
+                    <td>@item.OpportunityName</td>
+                    <td>@item.Deadline.ToShortDateString()</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-success">
+        🎉 Great! You have no overdue opportunities.
+    </div>
+}
 
 <p>
     <a asp-controller="Opportunities"

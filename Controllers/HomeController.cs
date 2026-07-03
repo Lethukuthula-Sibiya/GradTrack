@@ -31,10 +31,9 @@ namespace GradTrack.Controllers
 
                 RejectedCount = _context.Opportunities.Count(o => o.Status == "Rejected"),
 
-                UpcomingDeadlines = _context.Opportunities
-            .OrderBy(o => o.Deadline)
-            .Take(5)
-            .ToList()
+                UpcomingDeadlines = _context.Opportunities.Where(o => o.Deadline >= DateTime.Today).OrderBy(o => o.Deadline).Take(5).ToList(),
+
+                OverdueOpportunities = _context.Opportunities.Where(o => o.Deadline < DateTime.Today).OrderByDescending(o => o.Deadline).ToList()
             };
 
             return View(dashboard);

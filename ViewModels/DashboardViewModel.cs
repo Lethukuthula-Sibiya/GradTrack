@@ -15,5 +15,7 @@ namespace GradTrack.ViewModels
         public int RejectedCount { get; set; }
 
         public List<Opportunity> UpcomingDeadlines { get; set; } = new();
+
+        public List<Opportunity> OverdueOpportunities { get; set; } = new();
     }
 }
