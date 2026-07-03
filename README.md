@@ -106,15 +106,3 @@ dotnet ef database update
 dotnet run
 ```
 
----
-
-## Author
-
-Lethukuthula Mondli Sibiya
-
-BSc Honours Computer Science
-
-University of Pretoria
-
-GitHub:
-https://github.com/Lethukuthula-Sibiya
